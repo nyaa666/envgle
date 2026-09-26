@@ -1,0 +1,67 @@
+{
+  "name": "envgle",
+  "version": "0.1.0",
+  "description": "Audit every environment variable your code reads: missing, undocumented, duplicated, unsafe and secret-leaking. One command, zero dependencies, CI-ready (SARIF).",
+  "keywords": [
+    "env",
+    "dotenv",
+    "environment-variables",
+    "linter",
+    "static-analysis",
+    "secrets",
+    "security",
+    "ci",
+    "sarif",
+    "docker-compose",
+    "github-actions"
+  ],
+  "license": "MIT",
+  "author": "nyaa666",
+  "type": "module",
+  "engines": {
+    "node": ">=20.11.0"
+  },
+  "bin": {
+    "envgle": "dist/src/cli.js"
+  },
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/src/**/*.js",
+    "dist/src/**/*.d.ts",
+    "dist/src/**/*.js.map",
+    "docs/**",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node scripts/run-tests.mjs",
+    "test:only": "node scripts/run-tests.mjs",
+    "lint": "npm run check && node scripts/check-repo.mjs",
+    "verify": "npm run lint && npm run test",
+    "dogfood": "node dist/src/cli.js scan . --fail-on error",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyaa666/envgle.git"
+  },
+  "homepage": "https://github.com/nyaa666/envgle#readme",
+  "bugs": {
+    "url": "https://github.com/nyaa666/envgle/issues"
+  }
+}

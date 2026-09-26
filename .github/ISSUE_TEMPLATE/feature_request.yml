@@ -1,0 +1,80 @@
+name: Feature request
+description: Propose a new rule, a new language accessor, a new configuration field, or a change to an existing one.
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A feature request is strongest when it starts with the problem, not the
+        solution. Describe what goes wrong today and what you have to do about
+        it; the mechanism can follow.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: |
+        What is hard or impossible today? What goes wrong, and how do you
+        currently work around it? A concrete example from a real repository is
+        worth more than a general statement.
+      placeholder: |
+        Our compose files interpolate ${DATABASE_URL} from the host shell, so the
+        same variable is set in three different places and envgle cannot tell
+        which one wins.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour
+      description: |
+        What should envgle do instead? If you have a specific shape in mind,
+        a command, a flag or a configuration field, describe it concretely, and
+        say what the false-positive rate would be.
+      placeholder: |
+        Report an undeclared compose interpolation as an error when the compose
+        file is the only place the variable is set, and keep it at info
+        otherwise.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: |
+        What else would solve this? A manual process, a different tool, a
+        different default, or doing nothing. If a different tool already
+        handles this well, say which one and how.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      description: Where the change belongs. Choose the closest one.
+      options:
+        - A new rule
+        - A new language accessor
+        - A new configuration field
+        - A new output format
+        - A change to an existing rule
+        - A change to the CLI surface
+        - Documentation or CI only
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints
+      description: |
+        Anything the implementation must respect. The ones that apply here are
+        the zero-runtime-dependency rule, deterministic output, and the promise
+        that no secret value is ever printed.
+    validations:
+      required: false

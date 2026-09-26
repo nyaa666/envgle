@@ -1,0 +1,19 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax check
+        run: node --check src/app.js
+      - name: Build the image
+        run: docker build -t example-web:ci .
+      - name: Deploy
+        run: ./scripts/deploy.sh
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}

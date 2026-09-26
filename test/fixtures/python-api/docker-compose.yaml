@@ -1,0 +1,18 @@
+services:
+  api:
+    build: .
+    env_file:
+      - .env
+    environment:
+      APP_NAME: example-api
+      DEBUG_HOST: 0.0.0.0
+      DB_PASSWORD: ${DB_PASSWORD:-secret}
+      # A key with no value: compose passes it through only when it is set.
+      LOG_LEVEL:
+    ports:
+      - "8000:8000"
+  worker:
+    image: python-api-fixture:latest
+    command: celery -A app.tasks worker
+    environment:
+      - WORKERS=2

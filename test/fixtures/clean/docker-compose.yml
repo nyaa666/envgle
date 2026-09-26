@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    # No env_file: every value is written out below, so there is no file
+    # reference that could be missing, dev-only or untracked.
+    environment:
+      APP_NAME: example-web
+      PORT: 3000
+      LOG_LEVEL: info
+      BACKEND_URL: https://api.example.com
+      FEATURE_FLAGS: checkout,search
+      REQUEST_TIMEOUT_MS: 5000
+    ports:
+      - "3000:3000"

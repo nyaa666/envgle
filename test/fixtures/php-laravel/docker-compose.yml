@@ -1,0 +1,21 @@
+services:
+  app:
+    build:
+      context: .
+    env_file:
+      - .env
+      - .env.production
+    environment:
+      APP_ENV: production
+      # Every interpolation below is declared in .env, so none of them is a
+      # compose-var-undeclared finding.
+      APP_KEY: ${APP_KEY}
+      DB_HOST: ${DB_HOST:-db}
+      DB_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD}
+    ports:
+      - "8000:8000"
+  queue:
+    image: php:8.3-fpm
+    command: php artisan queue:work
+    environment:
+      - QUEUE_CONNECTION=redis

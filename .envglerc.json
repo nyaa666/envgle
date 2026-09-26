@@ -1,0 +1,14 @@
+{
+  // envgle audits its own source on every change.
+  "exclude": [
+    "test/fixtures",
+    "test/fixtures/**",
+    "test/scan-code.test.ts",
+    "test/accessors.test.ts",
+    "dist/**",
+    ".verify/**"
+  ],
+  "ignoreVariables": ["NAME"],
+  "ignoreRules": ["ci-secret-undeclared"],
+  "requireExampleFile": false
+}

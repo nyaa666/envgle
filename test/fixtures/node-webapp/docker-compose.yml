@@ -1,0 +1,21 @@
+services:
+  api:
+    build:
+      context: .
+      args:
+        NODE_VERSION: "20"
+    env_file:
+      - .env.local
+    environment:
+      APP_NAME: api
+      API_BASE_URL: ${REQUIRED_VAR}
+      FEATURE_FLAGS: ${OPTIONAL_VAR:-none}
+    ports:
+      - "3000:3000"
+  worker:
+    image: ghcr.io/example/webapp-worker:latest
+    environment:
+      - LOG_LEVEL=info
+      - QUEUE_URL=amqp://localhost:5672
+    depends_on:
+      - api

@@ -1,0 +1,16 @@
+[project]
+name = "python-api-fixture"
+version = "0.0.0"
+description = "Fixture project for envgle integration tests. Never executed."
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic-settings>=2.2.1",
+  "python-dotenv>=1.0.1",
+]
+
+[build-system]
+requires = ["setuptools>=69.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.envgle]
+exclude = ["**/__pycache__/**"]

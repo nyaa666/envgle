@@ -1,0 +1,6 @@
+# The repository root ignores .env, node_modules/ and dist/. The fixture
+# projects under this directory need those paths tracked, or the files would
+# never be committed and every fixture would change behaviour in a fresh clone.
+!.env
+!node_modules/
+!dist/

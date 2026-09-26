@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+
+# Workflow-level environment: applies to every job in this file.
+env:
+  NODE_ENV: test
+  CI: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    # Job-level environment: overrides the workflow-level values.
+    env:
+      LOG_LEVEL: debug
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: node --test
+      - name: Report region
+        run: echo "deploying to ${{ vars.REGION }}"
+      - name: Publish coverage
+        run: ./scripts/publish.sh
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

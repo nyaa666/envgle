@@ -1,0 +1,8 @@
+[package]
+name = "rust-cli-fixture"
+version = "0.0.0"
+edition = "2021"
+description = "Fixture project for envgle integration tests. Never built."
+
+[dependencies]
+dotenvy = "0.15.7"
