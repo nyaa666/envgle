@@ -77,6 +77,10 @@ jobs:
           TAG: ${{ github.ref_name }}
         run: |
           set -euo pipefail
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            printf 'Release %s already exists, leaving it alone.\n' "$TAG"
+            exit 0
+          fi
           notes=$(mktemp)
           awk -v tag="$TAG" '
             index($0, "## [" tag "]") == 1 { found = 1; next }
