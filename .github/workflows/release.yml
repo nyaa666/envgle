@@ -38,7 +38,24 @@ jobs:
       - name: Verify
         run: npm run verify
 
+      - name: Check whether the version is already on the registry
+        id: registry
+        run: |
+          set -euo pipefail
+          version="${GITHUB_REF_NAME#v}"
+          if npm view "envgle@${version}" version >/dev/null 2>&1; then
+            printf 'published=true\nversion=%s\n' "$version" >> "$GITHUB_OUTPUT"
+          else
+            printf 'published=false\nversion=%s\n' "$version" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Already published
+        if: steps.registry.outputs.published == 'true'
+        run: |
+          printf 'envgle@%s is already on the registry, nothing to publish.\n' "${{ steps.registry.outputs.version }}"
+
       - name: Publish
+        if: steps.registry.outputs.published != 'true'
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
